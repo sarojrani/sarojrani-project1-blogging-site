@@ -3,27 +3,33 @@
 const blogModel = require("../model/blogModel")
 
 const createBlog = async function (req,res){
-    let data = req.body 
+  try{  let data = req.body 
+    let id = req.authorId
+ let author = await authorModel.findById(id)
+ if(!author){res.status(400).send({status:false,msg:"author doesn't exist"})}
     let savedData = await blogModel.create(data)
-    res.send({msg : savedData})
-}
+    res.status(201).send({msg : savedData})}
+  
+  catch(err){res.status(500).send({msg:err.message})}}
+module.exports.createBlog = createBlog
+ 
+const getBlog = async function(req,res){
+try{
+    let Id = req.params.authorId
+    let data = await blogModel.find({authorId:`$`, isDeleted:false,isPublished:true})
 
-const deleteBlog = async function(req,res){
-    try{
-    let blogId = req.params.blogId
-    let user = await blogModel.findById(blogId)
-    if(!user) {
-      return res.status(404).send({status: false, message: "user doesn't exists"})
-    }
-    let updatedBlog = await blogModel.findOneAndUpdate({_id: blogId}, {isDeleted: true}, {new: true})
-    res.status(200).send({status: true, data: updatedBlog})
+
+
 }
 catch(err){
-        console.log(err)
-        res.status(500).send({ msg: err.message })
-    }
+    console.log(err)
+    res.send({msg:err})
 }
 
 
-module.exports.createBlog=createBlog
-module.exports.deleteBlog=deleteBlog
+}
+
+
+
+
+
