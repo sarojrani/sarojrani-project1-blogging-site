@@ -9,6 +9,7 @@ const blogController = require("../controller/blogController")
 
 router.post("/author",authorController.createAuthor)
 router.post("/blogs",blogController.createBlog)
+router.delete("/deleteBlog/:uerId",blogController.deleteBlog)
 
 module.exports = router
 
