@@ -6,7 +6,7 @@ const router = express.Router();
 const authorController = require("../controller/authorController")
 const blogController = require("../controller/blogController")
 
-
+//wertyu
 router.post("/author",authorController.createAuthor)
 router.post("/blogs",blogController.createBlog)
 router.delete("/deleteBlog/:uerId",blogController.deleteBlog)
