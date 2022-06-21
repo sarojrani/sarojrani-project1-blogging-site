@@ -19,10 +19,10 @@ category : { type : String ,
  required : true },
 
  subcategory : String,
- isDeleted :{type: boolean ,
+ isDeleted :{type: Boolean ,
     default : false
 },
- isPublished : {type: boolean ,
+ isPublished : {type: Boolean ,
     default : false
 }
 }
