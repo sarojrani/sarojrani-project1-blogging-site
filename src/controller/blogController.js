@@ -18,7 +18,7 @@ try{
     let Id = req.params.authorId
     let data = await blogModel.find({authorId:`$`, isDeleted:false,isPublished:true})
 
-
+/////changes
 
 }
 catch(err){
