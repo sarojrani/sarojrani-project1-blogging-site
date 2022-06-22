@@ -25,6 +25,8 @@ category : { type : String ,
  isPublished : {type: Boolean ,
     default : false
 }
+,
+publishedAt :String
 }
 ,{timestamps : true}
 
