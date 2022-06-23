@@ -2,13 +2,15 @@ const authorModel = require("../model/authorModel")
 
 const blogModel = require("../model/blogModel")
 
+///   **  we are using keyvalid function to check if the value is null( we have to send error in such case )
+
 let keyValid = function (value) {
   if (typeof (value) == "undefined" || typeof (value) == null) { return false }
-  if (typeof (value) === "string" && value.trim().length == 0) { return false }
+
   return true
 }
 
-
+  ////   API for creating blog  ////
 const createBlog = async function (req, res) {
   try {
     let data = req.body
@@ -39,17 +41,17 @@ if (!title) return res.status(400).send({ status: false, message: " use alphabet
   catch (err) { res.status(500).send({ msg: err.message }) }
 }
 
-
+///   API ////
 const getBlog = async function (req, res) {
   try {
-    let id = req.query.authorId
+    let tag = req.query.tag
     let category = req.query.category
     let blogsData = []
  
 
     
     
-    let blogs = await blogModel.find({ authorId: id, category: category })
+    let blogs = await blogModel.find({ tag:tag})
 
     if (!blogs) { res.status(400).send({ status: false, msg: " no such blog exist" }) }
 
@@ -66,7 +68,7 @@ const getBlog = async function (req, res) {
 }
 
 
-
+// API to update blog ///
 
 
 const updateBlog = async function (req, res) {
@@ -91,7 +93,7 @@ const updateBlog = async function (req, res) {
 
 
 
-
+/// API to delete blog ///
 
 
 const deleteBlog = async function (req, res) {
@@ -102,7 +104,7 @@ const deleteBlog = async function (req, res) {
       return res.status(404).send({ status: false, msg: "blog not found" })
     }
     let deletedBlog = await blogModel.findOneAndUpdate({ _id: blogId }, { isDeleted: true }, { new: true })
-    res.status(200).send()
+    res.status(200).send({ msg: "deleted" })
   }
   catch (err) {
     res.status(500).send({ msg: err })
@@ -111,7 +113,7 @@ const deleteBlog = async function (req, res) {
 
 
 
-
+// API to delete blog with query params  ///
 
 
 const deleteBlogDoc = async function (req, res) {
@@ -123,17 +125,18 @@ const deleteBlogDoc = async function (req, res) {
     let subcategory = req.query.subcategory;
     let isPublished = req.query.isPublished;
     let arr = []
-    let blog = await blogModel.find({ authorId: authorId, category: category, subcategory: subcategory, isPublished: isPublished, tag: tag })
+    let blog = await blogModel.find( { authorId: authorId ,category: category ,subcategory: subcategory, isPublished: isPublished,tag:tag } )
 
 
-    if (blog.isDeleted === true ) {
+    if (blog.isDeleted === true) {
       return res.status(404).send({ status: false, msg: " already deleted" })
     }
    
     blog.map(x => x.isDeleted = true)
     arr.push(blog)
+    if(arr.length == 0){res.status().send({msg:"there is no such blog which match your filters "})}
   
-    res.status(201).send({status: true, data: arr })
+    res.status(201).send({status:true , data: arr })
 
   }
   catch (err) {
