@@ -18,7 +18,7 @@ tag : [],
 category : { type : String , 
  required : true },
 
- subcategory : String,
+ subcategory :[],
  isDeleted :{type: Boolean ,
     default : false
 },

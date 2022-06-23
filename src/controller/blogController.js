@@ -102,7 +102,7 @@ const deleteBlog = async function (req, res) {
       return res.status(404).send({ status: false, msg: "blog not found" })
     }
     let deletedBlog = await blogModel.findOneAndUpdate({ _id: blogId }, { isDeleted: true }, { new: true })
-    res.status(200).send({ msg: "deleted" })
+    res.status(200).send()
   }
   catch (err) {
     res.status(500).send({ msg: err })
@@ -126,14 +126,14 @@ const deleteBlogDoc = async function (req, res) {
     let blog = await blogModel.find({ authorId: authorId, category: category, subcategory: subcategory, isPublished: isPublished, tag: tag })
 
 
-    if (blog.isDeleted !== false) {
+    if (blog.isDeleted === true ) {
       return res.status(404).send({ status: false, msg: " already deleted" })
     }
    
     blog.map(x => x.isDeleted = true)
     arr.push(blog)
   
-    res.status(201).send({ data: arr })
+    res.status(201).send({status: true, data: arr })
 
   }
   catch (err) {
