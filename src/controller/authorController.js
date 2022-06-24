@@ -15,14 +15,14 @@ const createAuthor = async function (req, res) {
         //<!----------------First name Regex-------------------------->
         let fName = /^[a-zA-Z.]{2,15}$/.test(data.fName)
         if (!fName) {
-            res.status(400).send({ msg: "Please enter alphabets only for first name and maximum legth should be 30" })
+            res.status(400).send({ msg: "Please enter alphabets only for first name and maximum legth should be 15" })
         }
 
         //<!-----------------Last name Regex------------------------->        
         if (!keyValid(data.lName)) return res.status(400).send({ status: false, message: "Please enter last name" })
         let lName = /^[A-Za-z]{2,20}$/.test(data.lName)
         if (!lName) {
-            res.status(400).send({ msg: "Please enter alphabets only for last name and maximum length should be 30" })
+            res.status(400).send({ msg: "Please enter alphabets only for last name and maximum length should be 20" })
         }
 
         //<!---------------Email Regex------------------------------>

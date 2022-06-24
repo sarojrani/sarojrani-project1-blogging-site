@@ -8,15 +8,15 @@ const mid = require("../middleware/middleware.js")
 router.post("/author",authorController.createAuthor)
 router.post("/blogs",blogController.createBlog)
 router.get("/blogs",blogController.getBlog)
-router.put("/blogs/:blogId/",blogController.updateBlog)
+router.put("/blogs/:blogId",blogController.updateBlog)
 router.delete("/blogs/:blogId",blogController.deleteBlog)
-router.delete("/blogs1",blogController.deleteBlogDoc)
+router.delete("/delete/:blogId",blogController.deleteBlogDoc)
 
 //<!----------------------Login API------------------------------------->
 router.post("/login",authorController.login)
 
 //<!----------------------APIs with Middleware-----------------------------------> 
-router.post("/blogs/:authorId",mid.authenticate,blogController.createBlog)
+router.post("/blogs",mid.authenticate,blogController.createBlog)
 router.put("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.updateBlog)
 router.delete("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.deleteBlog)
 router.delete("/blogs1/:authorId",mid.authenticate,mid.authorisation,blogController.deleteBlogDoc)

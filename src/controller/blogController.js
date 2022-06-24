@@ -2,7 +2,7 @@ const authorModel = require("../model/authorModel")
 const blogModel = require("../model/blogModel")
 
 let keyValid = function (value) {
-  if (typeof (value) == "undefined" || typeof (value) == null) { return false }
+  if (typeof (value) == "undefined" || typeof (value) == null || value.length==0) {return false }
   return true
 }
 
@@ -17,7 +17,7 @@ const createBlog = async function (req, res) {
     if (!title) return res.status(400).send({ status: false, message: " use alphabets only to define title" });
 
     //<!---------------------Body Validation-------------------------->
-    if (!keyValid(data.body)) return res.status(400).send({ status: false, message: "body is required" })
+    if (!keyValid(data.body)) return res.status(400).send({ status: false, message: "Body is required" })
     let body = /^[A-Za-z]+$/.test(data.body)
     let id = req.body.authorId
     let author = await authorModel.findById(id)
@@ -38,17 +38,9 @@ const createBlog = async function (req, res) {
 const getBlog = async function (req, res) {
   try {
     let doc = req.query
-    // let tag = req.query.tag
-    // let category = req.query.category
-    // let blogsData = []
     let blogs = await blogModel.find(doc)
 
-    if (!blogs) { res.status(400).send({ status: false, msg: "No such blog exist" }) }
-    // blogs.filter(n => {
-      // if (n.isDeleted == false && n.isPublished == true)
-        // blogsData.push(n)
-    // })
-
+    if (!blogs || blogs.length==0) { res.status(400).send({ status: false, msg: "No such blog exist" }) }
     return res.status(200).send({ data: blogs })
   }
   catch (err) { res.status(500).send({ status: false, msg: err.message }) }
@@ -83,7 +75,7 @@ const deleteBlog = async function (req, res) {
     res.status(200).send({ msg: "Deleted" })
   }
   catch (err) {
-    res.status(500).send({ msg: err })
+    res.status(500).send({ msg: err.message })
   }
 }
 
