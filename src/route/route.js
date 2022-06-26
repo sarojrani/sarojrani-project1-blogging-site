@@ -4,23 +4,21 @@ const authorController = require("../controller/authorController")
 const blogController = require("../controller/blogController")
 const mid = require("../middleware/middleware.js")
 
-//<!------------------API without Middleware-------------------------->
-router.post("/author",authorController.createAuthor)
-router.post("/blogs",blogController.createBlog)
-router.get("/blogs",blogController.getBlog)
-router.put("/blogs/:blogId",blogController.updateBlog)
-router.delete("/blogs/:blogId",blogController.deleteBlog)
-router.delete("/delete/:blogId",blogController.deleteBlogDoc)
+/////*******************API***************************** */
+ 
+router.post("/author", authorController.createAuthor)
 
-//<!----------------------Login API------------------------------------->
-router.post("/login",authorController.login)
+router.post("/blogs", mid.authenticate, blogController.createBlog)
 
-//<!----------------------APIs with Middleware-----------------------------------> 
-router.post("/blogs",mid.authenticate,blogController.createBlog)
-router.get("/blogs/authorId",mid.authenticate,mid.authorisation,blogController.getBlog)
-router.put("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.updateBlog)
-router.delete("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.deleteBlog)
-router.delete("/blogs1/:authorId",mid.authenticate,mid.authorisation,blogController.deleteBlogDoc)
+router.post("/login", authorController.login)
+
+router.get("/blogs", mid.authenticate,blogController.getBlog)
+
+router.put("/blogs/:blogId", mid.authenticate, mid.authorisation,  blogController.updateBlog)
+
+router.delete("/blogs/:blogId", mid.authenticate, mid.authorisation, blogController.deleteBlog)
+
+router.delete("/blogs1", mid.authenticate,  blogController.deleteBlogDoc)
 
 module.exports = router
 
