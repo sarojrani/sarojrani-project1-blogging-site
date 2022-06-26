@@ -17,6 +17,7 @@ router.post("/login",authorController.login)
 
 //<!----------------------APIs with Middleware-----------------------------------> 
 router.post("/blogs",mid.authenticate,blogController.createBlog)
+router.get("/blogs/authorId",mid.authenticate,mid.authorisation,blogController.getBlog)
 router.put("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.updateBlog)
 router.delete("/blogs/:blogId/:authorId",mid.authenticate,mid.authorisation,mid.delMid,blogController.deleteBlog)
 router.delete("/blogs1/:authorId",mid.authenticate,mid.authorisation,blogController.deleteBlogDoc)

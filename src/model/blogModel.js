@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema({
         type: ObjectId,
         ref: 'ProjectAuthor'
     },
-    tag: [],
+    tag: [String],
 
     category: {
         type: String,
@@ -29,12 +29,14 @@ const blogSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    deletedAt:{type:String,
+        default:null},
     isPublished: {
         type: Boolean,
         default: false
     }
     ,
-    publishedAt: String
+    publishedAt: Date
 }
     , { timestamps: true }
 
