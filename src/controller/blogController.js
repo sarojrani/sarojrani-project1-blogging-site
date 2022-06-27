@@ -1,7 +1,8 @@
 const authorModel = require("../model/authorModel")
 const blogModel = require("../model/blogModel")
 const moment = require('moment');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { set } = require("mongoose");
 let keyValid = function (value) {
   if (typeof (value) == "undefined" || typeof (value) == null || value.length == 0) { return false }
   return true
@@ -90,12 +91,19 @@ const updateBlog = async function (req, res) {
 
   let title = req.body.title
   let body = req.body.body
-  let tag = req.body.tag
-  let subcategory = req.body.subcategory
+  let newTag = req.body.tag
+  let sub = req.body.subcategory
 
     var currentDate = moment().toString();
+    let blogg = await blogModel.findById( blogId )
+    tag = blogg.tag;
+    subcategory=blogg.subcategory
    
-    let blog = await blogModel.findOneAndUpdate({ _id: blogId },{ $set:{title:title,body:body,tag:tag,subcategory:subcategory,publishedAt: currentDate,isPublished:true}}, { new: true });
+  
+
+
+   
+    let blog = await blogModel.findOneAndUpdate({ _id: blogId },{ $set:{title:title,body:body,$addToSet :{tag:newTag,subcategory:sub},publishedAt: currentDate,isPublished:true}}, { new: true });
     if (!blog || blog.length == 0) {
       return res.status(404).send({ msg: "No such blog exists" });
     }
