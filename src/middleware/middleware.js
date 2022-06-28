@@ -30,12 +30,12 @@ const authorisation = async function (req, res, next) {
         let decodedToken = jwt.verify(token, "functionup-radon");
         if (!decodedToken)
             return res.status(401).send({ status: false, msg: "Token invalid" })
-            let userLogedIn = decodedToken.userId
-let blogId = req.params.blogId
-        
+        let userLogedIn = decodedToken.userId
+        let blogId = req.params.blogId
+
         let Blog = await blogModel.findById(blogId)
         let author = Blog.authorId
-        
+
 
         if (userLogedIn != author) { res.status(403).send({ status: false, msg: "Sorry, you are not authorised to do it" }) }
 
