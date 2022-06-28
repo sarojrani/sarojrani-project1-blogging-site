@@ -8,9 +8,9 @@ const mid = require("../middleware/middleware.js")
  
 router.post("/author", authorController.createAuthor)
 
-router.post("/blogs",mid.authenticate, blogController.createBlog)
-
 router.post("/login", authorController.login)
+
+router.post("/blogs",mid.authenticate, blogController.createBlog)
 
 router.get("/blogs",mid.authenticate,blogController.getBlog)
 

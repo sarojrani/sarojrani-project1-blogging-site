@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const authorModel = require("../model/authorModel.js")
-const blogModel = require("../model/blogModel.js")
+
 
 let keyValid = function (value) {
     if (typeof (value) == "undefined" || typeof (value) == null || value.length == 0) { return false }
@@ -16,7 +16,7 @@ const createAuthor = async function (req, res) {
 
         if (!keyValid(data.fName)) return res.status(400).send({ status: false, message: "Please enter first name" })
         //<!----------------First name Regex-------------------------->
-        fName = /^[a-zA-Z.]{2,15}$/.test(data.fName)
+        fName = /^[A-Za-z.]{2,15}$/.test(data.fName)
         if (!fName) {
             res.status(400).send({ msg: "Please enter alphabets only for first name and maximum legth should be 15" })
         }
