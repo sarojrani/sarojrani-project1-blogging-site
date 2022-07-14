@@ -2,7 +2,7 @@ const authorModel = require("../model/authorModel")
 const blogModel = require("../model/blogModel")
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
-const { set } = require("mongoose");
+const mongoose = require("mongoose");
 let keyValid = function (value) {
   if (typeof (value) == "undefined" || typeof (value) == null || value.length == 0) { return false }
   return true
