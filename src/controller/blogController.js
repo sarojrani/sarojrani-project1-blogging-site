@@ -112,6 +112,7 @@ const deleteBlog = async function (req, res) {
     var currentDate = moment().toString();
     let blogId = req.params.blogId
     let blog = await blogModel.findById(blogId)
+    console .log(blog._id.toString())
     if (!blog) {
       return res.status(404).send({ status: false, msg: "There is no such blog" })
     }
